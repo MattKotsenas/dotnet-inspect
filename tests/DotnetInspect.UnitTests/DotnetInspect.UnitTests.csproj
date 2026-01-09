@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <EnableMSTestRunner>true</EnableMSTestRunner>
+    <OutputType>Exe</OutputType>
+    <TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MSTest" />
+    <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="Verify.MSTest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\DotnetInspect.Cli\DotnetInspect.Cli.csproj" />
+    <ProjectReference Include="..\..\src\DotnetInspect.Core\DotnetInspect.Core.csproj" />
+    <ProjectReference Include="..\..\src\DotnetInspect.NuGet\DotnetInspect.NuGet.csproj" />
+  </ItemGroup>
+
+</Project>

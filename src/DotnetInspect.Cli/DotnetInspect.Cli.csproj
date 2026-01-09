@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>inspect</ToolCommandName>
+    <PackageId>dotnet-inspect</PackageId>
+    <Version>1.0.0</Version>
+    <Description>A .NET global tool that inspects NuGet packages and prints their .nuspec metadata.</Description>
+    <Authors>dotnet-inspect contributors</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/dotnet-inspect/dotnet-inspect</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ConsoleAppFramework" />
+    <PackageReference Include="Spectre.Console" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DotnetInspect.Core\DotnetInspect.Core.csproj" />
+    <ProjectReference Include="..\DotnetInspect.NuGet\DotnetInspect.NuGet.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>
