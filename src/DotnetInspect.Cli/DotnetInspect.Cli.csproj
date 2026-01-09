@@ -5,7 +5,6 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>inspect</ToolCommandName>
     <PackageId>dotnet-inspect</PackageId>
-    <Version>1.0.0</Version>
     <Description>A .NET global tool that inspects NuGet packages and prints their .nuspec metadata.</Description>
     <Authors>dotnet-inspect contributors</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

@@ -5,19 +5,18 @@
   <ItemGroup>
     <!-- CLI Framework -->
     <PackageVersion Include="ConsoleAppFramework" Version="5.3.3" />
-
+    <PackageVersion Include="Nerdbank.GitVersioning">
+      <Version>3.9.50</Version>
+    </PackageVersion>
     <!-- Rendering -->
     <PackageVersion Include="Spectre.Console" Version="0.49.1" />
-
     <!-- NuGet -->
     <PackageVersion Include="NuGet.Configuration" Version="6.12.4" />
     <PackageVersion Include="NuGet.Protocol" Version="6.12.4" />
     <PackageVersion Include="NuGet.Packaging" Version="6.12.4" />
-
     <!-- Hosting -->
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.1" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
-
     <!-- Testing -->
     <PackageVersion Include="Microsoft.Testing.Platform" Version="1.5.3" />
     <PackageVersion Include="MSTest" Version="3.7.3" />
