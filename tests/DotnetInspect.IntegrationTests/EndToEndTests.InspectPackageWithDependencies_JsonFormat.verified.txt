@@ -5,8 +5,8 @@
     "id": "TestPackage.WithDependencies",
     "version": "2.0.0",
     "nuspec": {
-      "description": "Description",
-      "authors": "Author",
+      "description": "A test package with dependencies.",
+      "authors": "Dependency Author",
       "owners": "",
       "projectUrl": "",
       "iconUrl": "",
@@ -17,20 +17,21 @@
       "dependencyGroups": [
         {
           "targetFramework": "net8.0",
-          "dependencies": []
-        },
-        {
-          "targetFramework": "unsupported",
           "dependencies": [
             {
-              "id": "1.0.0",
-              "versionRange": "(, )"
+              "id": "TestPackage.Simple",
+              "versionRange": "[1.0.0, )"
             }
           ]
         },
         {
           "targetFramework": "net9.0",
-          "dependencies": []
+          "dependencies": [
+            {
+              "id": "TestPackage.Simple",
+              "versionRange": "[1.0.0, )"
+            }
+          ]
         }
       ]
     }

@@ -74,22 +74,22 @@ public class EndToEndTests : VerifyBase
     {
         // Create TestPackage.Simple 1.0.0
         PackageFeed.Create(feedPath)
-            .Package("TestPackage.Simple", "1.0.0", out Package _)
+            .Package("TestPackage.Simple", "1.0.0", out Package _, "Test Author", "A simple test package for dotnet-inspect integration tests.")
                 .Library("netstandard2.0")
             .Save();
 
         // Create TestPackage.WithDependencies 2.0.0
         PackageFeed.Create(feedPath)
-            .Package("TestPackage.WithDependencies", "2.0.0", out Package _)
+            .Package("TestPackage.WithDependencies", "2.0.0", out Package _, "Dependency Author", "A test package with dependencies.")
                 .Library("net8.0")
-                .Dependency("TestPackage.Simple", "1.0.0", "net8.0")
+                .Dependency("net8.0", "TestPackage.Simple", "1.0.0")
                 .Library("net9.0")
-                .Dependency("TestPackage.Simple", "1.0.0", "net9.0")
+                .Dependency("net9.0", "TestPackage.Simple", "1.0.0")
             .Save();
 
         // Create TestPackage.NoDeps 1.0.0 - minimal package
         PackageFeed.Create(feedPath)
-            .Package("TestPackage.NoDeps", "1.0.0", out Package _)
+            .Package("TestPackage.NoDeps", "1.0.0", out Package _, "Minimal Author", "A minimal package with no dependencies.")
                 .Library("netstandard2.0")
             .Save();
     }

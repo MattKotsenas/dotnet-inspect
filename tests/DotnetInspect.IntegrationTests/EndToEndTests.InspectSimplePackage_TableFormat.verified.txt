@@ -1,15 +1,15 @@
 ﻿{
   stdout:
-              Metadata              
-┌─────────────┬────────────────────┐
-│ Property    │ Value              │
-├─────────────┼────────────────────┤
-│ ID          │ TestPackage.Simple │
-│ Version     │ 1.0.0              │
-│ Description │ Description        │
-│ Authors     │ Author             │
-│ License     │ N/A                │
-└─────────────┴────────────────────┘
+                                  Metadata                                   
+┌─────────────┬─────────────────────────────────────────────────────────────┐
+│ Property    │ Value                                                       │
+├─────────────┼─────────────────────────────────────────────────────────────┤
+│ ID          │ TestPackage.Simple                                          │
+│ Version     │ 1.0.0                                                       │
+│ Description │ A simple test package for dotnet-inspect integration tests. │
+│ Authors     │ Test Author                                                 │
+│ License     │ N/A                                                         │
+└─────────────┴─────────────────────────────────────────────────────────────┘
 
 No dependencies
 ,

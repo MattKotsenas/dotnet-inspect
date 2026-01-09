@@ -1,22 +1,23 @@
 ﻿{
   stdout:
-                   Metadata                   
-┌─────────────┬──────────────────────────────┐
-│ Property    │ Value                        │
-├─────────────┼──────────────────────────────┤
-│ ID          │ TestPackage.WithDependencies │
-│ Version     │ 2.0.0                        │
-│ Description │ Description                  │
-│ Authors     │ Author                       │
-│ License     │ N/A                          │
-└─────────────┴──────────────────────────────┘
+                     Metadata                      
+┌─────────────┬───────────────────────────────────┐
+│ Property    │ Value                             │
+├─────────────┼───────────────────────────────────┤
+│ ID          │ TestPackage.WithDependencies      │
+│ Version     │ 2.0.0                             │
+│ Description │ A test package with dependencies. │
+│ Authors     │ Dependency Author                 │
+│ License     │ N/A                               │
+└─────────────┴───────────────────────────────────┘
 
-              Dependencies              
-┌──────────────────┬─────────┬─────────┐
-│ Target Framework │ Package │ Version │
-├──────────────────┼─────────┼─────────┤
-│ unsupported      │ 1.0.0   │ (, )    │
-└──────────────────┴─────────┴─────────┘
+                    Dependencies                     
+┌──────────────────┬────────────────────┬───────────┐
+│ Target Framework │ Package            │ Version   │
+├──────────────────┼────────────────────┼───────────┤
+│ net8.0           │ TestPackage.Simple │ [1.0.0, ) │
+│ net9.0           │ TestPackage.Simple │ [1.0.0, ) │
+└──────────────────┴────────────────────┴───────────┘
 ,
   stderr: 
 }

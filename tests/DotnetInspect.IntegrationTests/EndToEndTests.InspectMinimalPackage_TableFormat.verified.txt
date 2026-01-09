@@ -1,15 +1,15 @@
 ﻿{
   stdout:
-              Metadata              
-┌─────────────┬────────────────────┐
-│ Property    │ Value              │
-├─────────────┼────────────────────┤
-│ ID          │ TestPackage.NoDeps │
-│ Version     │ 1.0.0              │
-│ Description │ Description        │
-│ Authors     │ Author             │
-│ License     │ N/A                │
-└─────────────┴────────────────────┘
+                        Metadata                         
+┌─────────────┬─────────────────────────────────────────┐
+│ Property    │ Value                                   │
+├─────────────┼─────────────────────────────────────────┤
+│ ID          │ TestPackage.NoDeps                      │
+│ Version     │ 1.0.0                                   │
+│ Description │ A minimal package with no dependencies. │
+│ Authors     │ Minimal Author                          │
+│ License     │ N/A                                     │
+└─────────────┴─────────────────────────────────────────┘
 
 No dependencies
 ,
