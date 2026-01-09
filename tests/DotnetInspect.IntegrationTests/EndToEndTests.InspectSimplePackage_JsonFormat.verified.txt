@@ -1,12 +1,11 @@
 ﻿{
-  stdout:
+  output:
 [
   {
     "id": "TestPackage.Simple",
     "version": "1.0.0",
     "nuspec": {
-      "description": "A simple test package for dotnet-inspect integration 
-tests.",
+      "description": "A simple test package for dotnet-inspect integration tests.",
       "authors": "Test Author",
       "owners": "",
       "projectUrl": "",
@@ -24,6 +23,4 @@ tests.",
     }
   }
 ]
-,
-  stderr: 
 }

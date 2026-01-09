@@ -16,6 +16,18 @@ public sealed class OutputRenderer : IOutputRenderer
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
     };
 
+    private readonly IAnsiConsole _console;
+
+    public OutputRenderer()
+        : this(AnsiConsole.Console)
+    {
+    }
+
+    public OutputRenderer(IAnsiConsole console)
+    {
+        _console = console;
+    }
+
     public void Render(PackageMetadata metadata, OutputFormat format)
     {
         switch (format)
@@ -32,10 +44,10 @@ public sealed class OutputRenderer : IOutputRenderer
 
     public void RenderError(string message)
     {
-        AnsiConsole.MarkupLine($"[red]Error:[/] {Markup.Escape(message)}");
+        _console.MarkupLine($"[red]Error:[/] {Markup.Escape(message)}");
     }
 
-    private static void RenderJson(PackageMetadata metadata)
+    private void RenderJson(PackageMetadata metadata)
     {
         JsonOutput output = new(
             metadata.Id,
@@ -63,10 +75,10 @@ public sealed class OutputRenderer : IOutputRenderer
 
         List<JsonOutput> outputList = [output];
         string json = JsonSerializer.Serialize(outputList, s_jsonOptions);
-        AnsiConsole.WriteLine(json);
+        _console.WriteLine(json);
     }
 
-    private static void RenderTable(PackageMetadata metadata)
+    private void RenderTable(PackageMetadata metadata)
     {
         // Metadata section
         Table metadataTable = new();
@@ -114,8 +126,8 @@ public sealed class OutputRenderer : IOutputRenderer
             metadataTable.AddRow("[bold]Copyright[/]", Markup.Escape(metadata.Copyright));
         }
 
-        AnsiConsole.Write(metadataTable);
-        AnsiConsole.WriteLine();
+        _console.Write(metadataTable);
+        _console.WriteLine();
 
         // Repository section
         if (!string.IsNullOrEmpty(metadata.RepositoryUrl) ||
@@ -143,8 +155,8 @@ public sealed class OutputRenderer : IOutputRenderer
                 repoTable.AddRow("[bold]Commit[/]", Markup.Escape(metadata.RepositoryCommit));
             }
 
-            AnsiConsole.Write(repoTable);
-            AnsiConsole.WriteLine();
+            _console.Write(repoTable);
+            _console.WriteLine();
         }
 
         // Dependencies section
@@ -175,11 +187,11 @@ public sealed class OutputRenderer : IOutputRenderer
                 }
             }
 
-            AnsiConsole.Write(depsTable);
+            _console.Write(depsTable);
         }
         else
         {
-            AnsiConsole.MarkupLine("[dim]No dependencies[/]");
+            _console.MarkupLine("[dim]No dependencies[/]");
         }
     }
 

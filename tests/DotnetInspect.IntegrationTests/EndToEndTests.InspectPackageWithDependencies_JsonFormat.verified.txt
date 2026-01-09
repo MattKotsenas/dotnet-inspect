@@ -1,5 +1,5 @@
 ﻿{
-  stdout:
+  output:
 [
   {
     "id": "TestPackage.WithDependencies",
@@ -37,6 +37,4 @@
     }
   }
 ]
-,
-  stderr: 
 }

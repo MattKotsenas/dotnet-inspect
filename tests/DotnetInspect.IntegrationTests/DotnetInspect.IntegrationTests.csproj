@@ -13,6 +13,7 @@
     <PackageReference Include="FluentAssertions" />
     <PackageReference Include="Verify.MSTest" />
     <PackageReference Include="MSBuild.ProjectCreation" />
+    <PackageReference Include="Spectre.Console.Testing" />
   </ItemGroup>
 
   <ItemGroup>

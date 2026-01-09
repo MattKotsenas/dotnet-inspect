@@ -1,15 +1,14 @@
-using System.Diagnostics;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 
 using Microsoft.Build.Utilities.ProjectCreation;
+
+using Spectre.Console.Testing;
 
 namespace DotnetInspect.IntegrationTests;
 
 [TestClass]
 public class EndToEndTests : VerifyBase
 {
-    private static string? s_cliPath;
     private static string? s_feedPath;
     private static string? s_nugetConfigPath;
 
@@ -22,21 +21,8 @@ public class EndToEndTests : VerifyBase
     [ClassInitialize]
     public static void ClassInitialize(TestContext _)
     {
-        string? assemblyLocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        string? projectRoot = Path.GetFullPath(Path.Combine(assemblyLocation!, "..", "..", "..", "..", ".."));
-
-        // Find CLI executable
-        string configuration = GetConfiguration();
-        string tfm = GetTargetFramework();
-        s_cliPath = Path.Combine(projectRoot, "src", "DotnetInspect.Cli", "bin", configuration, tfm, "DotnetInspect.Cli.exe");
-
-        if (!File.Exists(s_cliPath))
-        {
-            s_cliPath = Path.Combine(projectRoot, "src", "DotnetInspect.Cli", "bin", configuration, tfm, "DotnetInspect.Cli");
-        }
-
         // Create fake package feed
-        s_feedPath = Path.Combine(Path.GetTempPath(), "DotnetInspect.E2E.Feed", Guid.NewGuid().ToString("N"));
+        s_feedPath = Path.Combine(Path.GetTempPath(), "DotnetInspect.IntegrationTests.Feed", Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(s_feedPath);
 
         CreateTestPackages(s_feedPath);
@@ -94,140 +80,119 @@ public class EndToEndTests : VerifyBase
             .Save();
     }
 
-    private static string GetConfiguration()
-    {
-#if DEBUG
-        return "Debug";
-#else
-        return "Release";
-#endif
-    }
-
-    private static string GetTargetFramework()
-    {
-#if NET10_0
-        return "net10.0";
-#elif NET9_0
-        return "net9.0";
-#else
-        return "net8.0";
-#endif
-    }
-
     [TestMethod]
     public async Task InspectSimplePackage_TableFormat()
     {
-        (int exitCode, string stdout, string stderr) = await RunCliAsync(
+        (int exitCode, string output) = await RunCliAsync(
             "TestPackage.Simple", "--version", "1.0.0", "--config", s_nugetConfigPath!);
 
-        await Verify(new { exitCode, stdout, stderr });
+        await Verify(new { exitCode, output });
     }
 
     [TestMethod]
     public async Task InspectSimplePackage_JsonFormat()
     {
-        (int exitCode, string stdout, string stderr) = await RunCliAsync(
+        (int exitCode, string output) = await RunCliAsync(
             "TestPackage.Simple", "--version", "1.0.0", "--config", s_nugetConfigPath!, "--format", "json");
 
-        await Verify(new { exitCode, stdout, stderr });
+        await Verify(new { exitCode, output });
     }
 
     [TestMethod]
     public async Task InspectPackageWithDependencies_TableFormat()
     {
-        (int exitCode, string stdout, string stderr) = await RunCliAsync(
+        (int exitCode, string output) = await RunCliAsync(
             "TestPackage.WithDependencies", "--version", "2.0.0", "--config", s_nugetConfigPath!);
 
-        await Verify(new { exitCode, stdout, stderr });
+        await Verify(new { exitCode, output });
     }
 
     [TestMethod]
     public async Task InspectPackageWithDependencies_JsonFormat()
     {
-        (int exitCode, string stdout, string stderr) = await RunCliAsync(
+        (int exitCode, string output) = await RunCliAsync(
             "TestPackage.WithDependencies", "--version", "2.0.0", "--config", s_nugetConfigPath!, "--format", "json");
 
-        await Verify(new { exitCode, stdout, stderr });
+        await Verify(new { exitCode, output });
     }
 
     [TestMethod]
     public async Task InspectMinimalPackage_TableFormat()
     {
-        (int exitCode, string stdout, string stderr) = await RunCliAsync(
+        (int exitCode, string output) = await RunCliAsync(
             "TestPackage.NoDeps", "--version", "1.0.0", "--config", s_nugetConfigPath!);
 
-        await Verify(new { exitCode, stdout, stderr });
+        await Verify(new { exitCode, output });
     }
 
     [TestMethod]
     public async Task InspectNonExistentPackage_ReturnsExitCode2()
     {
-        (int exitCode, string stdout, string stderr) = await RunCliAsync(
+        (int exitCode, string output) = await RunCliAsync(
             "NonExistentPackage12345678", "--version", "1.0.0", "--config", s_nugetConfigPath!);
 
-        await Verify(new { exitCode, stdout, stderr });
+        await Verify(new { exitCode, output });
     }
 
     [TestMethod]
     public async Task InspectNonExistentVersion_ReturnsExitCode3()
     {
-        (int exitCode, string stdout, string stderr) = await RunCliAsync(
+        (int exitCode, string output) = await RunCliAsync(
             "TestPackage.Simple", "--version", "999.999.999", "--config", s_nugetConfigPath!);
 
-        await Verify(new { exitCode, stdout, stderr });
+        await Verify(new { exitCode, output });
     }
 
     [TestMethod]
     public async Task InspectWithoutVersion_ReturnsExitCode1()
     {
-        (int exitCode, string stdout, string stderr) = await RunCliAsync(
+        (int exitCode, string output) = await RunCliAsync(
             "TestPackage.Simple", "--config", s_nugetConfigPath!);
 
-        await Verify(new { exitCode, stdout, stderr });
+        await Verify(new { exitCode, output });
     }
 
     [TestMethod]
     public async Task InspectWithoutPackage_ReturnsExitCode1()
     {
-        (int exitCode, string stdout, string stderr) = await RunCliAsync(
+        (int exitCode, string output) = await RunCliAsync(
             "--version", "1.0.0", "--config", s_nugetConfigPath!);
 
-        await Verify(new { exitCode, stdout, stderr });
+        await Verify(new { exitCode, output });
     }
 
-    private static async Task<(int ExitCode, string StdOut, string StdErr)> RunCliAsync(params string[] args)
+    private static async Task<(int ExitCode, string Output)> RunCliAsync(params string[] args)
     {
-        ProcessStartInfo startInfo = new()
-        {
-            FileName = s_cliPath,
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            UseShellExecute = false,
-            CreateNoWindow = true
-        };
+        TestConsole console = new();
+        console.Profile.Width = 120;
 
-        // Disable ANSI colors for consistent output
-        startInfo.Environment["NO_COLOR"] = "1";
+        // Capture Console.Out/Error for ConsoleAppFramework argument parsing errors
+        StringWriter stdoutWriter = new();
+        StringWriter stderrWriter = new();
+        TextWriter originalOut = Console.Out;
+        TextWriter originalError = Console.Error;
 
-        foreach (string arg in args)
+        try
         {
-            startInfo.ArgumentList.Add(arg);
+            Console.SetOut(stdoutWriter);
+            Console.SetError(stderrWriter);
+
+            int exitCode = await DotnetInspect.Cli.AppRunner.RunAsync(args, console);
+
+            // Combine outputs: Spectre.Console output + Console output
+            string spectreOutput = console.Output;
+            string stdoutOutput = stdoutWriter.ToString();
+            string stderrOutput = stderrWriter.ToString();
+
+            string combinedOutput = spectreOutput + stdoutOutput + stderrOutput;
+            combinedOutput = combinedOutput.ReplaceLineEndings("\n").TrimEnd('\n');
+
+            return (exitCode, combinedOutput);
         }
-
-        using Process? process = Process.Start(startInfo);
-        if (process == null)
+        finally
         {
-            throw new InvalidOperationException($"Failed to start process: {s_cliPath}");
+            Console.SetOut(originalOut);
+            Console.SetError(originalError);
         }
-
-        string stdout = await process.StandardOutput.ReadToEndAsync();
-        string stderr = await process.StandardError.ReadToEndAsync();
-        await process.WaitForExitAsync();
-
-        // Normalize line endings for cross-platform consistency
-        stdout = stdout.ReplaceLineEndings("\n");
-        stderr = stderr.ReplaceLineEndings("\n");
-
-        return (process.ExitCode, stdout, stderr);
     }
 }
