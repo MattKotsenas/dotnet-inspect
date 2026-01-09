@@ -1,0 +1,28 @@
+﻿{
+  stdout:
+[
+  {
+    "id": "TestPackage.Simple",
+    "version": "1.0.0",
+    "nuspec": {
+      "description": "Description",
+      "authors": "Author",
+      "owners": "",
+      "projectUrl": "",
+      "iconUrl": "",
+      "copyright": "",
+      "tags": "",
+      "releaseNotes": "",
+      "requireLicenseAcceptance": false,
+      "dependencyGroups": [
+        {
+          "targetFramework": "netstandard2.0",
+          "dependencies": []
+        }
+      ]
+    }
+  }
+]
+,
+  stderr: 
+}

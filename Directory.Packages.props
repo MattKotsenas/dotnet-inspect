@@ -22,5 +22,6 @@
     <PackageVersion Include="MSTest" Version="3.7.3" />
     <PackageVersion Include="FluentAssertions" Version="7.0.0" />
     <PackageVersion Include="Verify.MSTest" Version="28.6.1" />
+    <PackageVersion Include="MSBuild.ProjectCreation" Version="17.0.1" />
   </ItemGroup>
 </Project>

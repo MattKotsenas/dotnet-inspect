@@ -1,0 +1,7 @@
+﻿{
+  exitCode: 1,
+  stdout:
+Required argument 'version' was not specified.
+,
+  stderr: 
+}

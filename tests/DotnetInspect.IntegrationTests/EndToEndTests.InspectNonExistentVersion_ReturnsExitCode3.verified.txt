@@ -1,0 +1,7 @@
+﻿{
+  exitCode: 3,
+  stdout:
+Error: Version '999.999.999' of package 'TestPackage.Simple' was not found.
+,
+  stderr: 
+}

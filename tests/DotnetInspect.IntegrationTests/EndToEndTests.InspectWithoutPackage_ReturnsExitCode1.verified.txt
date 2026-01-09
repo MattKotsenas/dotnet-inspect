@@ -1,0 +1,7 @@
+﻿{
+  exitCode: 1,
+  stdout:
+Argument '1.0.0' is not recognized.
+,
+  stderr: 
+}

@@ -1,0 +1,8 @@
+﻿{
+  exitCode: 2,
+  stdout:
+Error: Package 'NonExistentPackage12345678' was not found on any configured 
+feed.
+,
+  stderr: 
+}

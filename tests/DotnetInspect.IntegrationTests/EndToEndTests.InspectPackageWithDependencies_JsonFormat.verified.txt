@@ -1,0 +1,41 @@
+﻿{
+  stdout:
+[
+  {
+    "id": "TestPackage.WithDependencies",
+    "version": "2.0.0",
+    "nuspec": {
+      "description": "Description",
+      "authors": "Author",
+      "owners": "",
+      "projectUrl": "",
+      "iconUrl": "",
+      "copyright": "",
+      "tags": "",
+      "releaseNotes": "",
+      "requireLicenseAcceptance": false,
+      "dependencyGroups": [
+        {
+          "targetFramework": "net8.0",
+          "dependencies": []
+        },
+        {
+          "targetFramework": "unsupported",
+          "dependencies": [
+            {
+              "id": "1.0.0",
+              "versionRange": "(, )"
+            }
+          ]
+        },
+        {
+          "targetFramework": "net9.0",
+          "dependencies": []
+        }
+      ]
+    }
+  }
+]
+,
+  stderr: 
+}

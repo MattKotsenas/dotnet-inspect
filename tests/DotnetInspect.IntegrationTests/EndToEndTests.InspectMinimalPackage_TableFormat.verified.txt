@@ -1,0 +1,17 @@
+﻿{
+  stdout:
+              Metadata              
+┌─────────────┬────────────────────┐
+│ Property    │ Value              │
+├─────────────┼────────────────────┤
+│ ID          │ TestPackage.NoDeps │
+│ Version     │ 1.0.0              │
+│ Description │ Description        │
+│ Authors     │ Author             │
+│ License     │ N/A                │
+└─────────────┴────────────────────┘
+
+No dependencies
+,
+  stderr: 
+}
