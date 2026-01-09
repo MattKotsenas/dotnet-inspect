@@ -4,6 +4,7 @@ using DotnetInspect.Core;
 
 using NuGet.Common;
 using NuGet.Configuration;
+using NuGet.Credentials;
 using NuGet.Packaging;
 using NuGet.Packaging.Core;
 using NuGet.Protocol;
@@ -16,6 +17,32 @@ namespace DotnetInspect.NuGet;
 
 public sealed class NuGetPackageInspector : IPackageInspector
 {
+    private static readonly object s_credentialSetupLock = new();
+    private static bool s_credentialServiceInitialized;
+
+    private static void EnsureCredentialProvidersInitialized()
+    {
+        if (s_credentialServiceInitialized)
+        {
+            return;
+        }
+
+        lock (s_credentialSetupLock)
+        {
+            if (s_credentialServiceInitialized)
+            {
+                return;
+            }
+
+            // Enable credential providers (e.g., Azure Artifacts Credential Provider)
+            DefaultCredentialServiceUtility.SetupDefaultCredentialService(
+                NullLogger.Instance,
+                nonInteractive: true);
+
+            s_credentialServiceInitialized = true;
+        }
+    }
+
     public async Task<PackageMetadata> InspectAsync(
         string packageId,
         string version,
@@ -23,6 +50,8 @@ public sealed class NuGetPackageInspector : IPackageInspector
         bool includePrerelease,
         CancellationToken cancellationToken = default)
     {
+        EnsureCredentialProvidersInitialized();
+
         ISettings settings = LoadSettings(configPath);
         PackageSourceProvider sourceProvider = new(settings);
         IEnumerable<PackageSource> packageSources = sourceProvider.LoadPackageSources()

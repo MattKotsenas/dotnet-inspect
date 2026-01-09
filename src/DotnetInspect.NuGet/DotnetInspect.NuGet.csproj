@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="NuGet.Configuration" />
+    <PackageReference Include="NuGet.Credentials" />
     <PackageReference Include="NuGet.Protocol" />
     <PackageReference Include="NuGet.Packaging" />
   </ItemGroup>
