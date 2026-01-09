@@ -22,18 +22,33 @@ public static class AppRunner
         int exitCode = 0;
         int previousExitCode = Environment.ExitCode;
 
-        await ConsoleApp.RunAsync(args, async ([Argument] string package, string version, string? config = null, OutputFormat format = OutputFormat.Table, bool includePrerelease = false) =>
-        {
-            exitCode = await handler.ExecuteAsync(package, version, config, format, includePrerelease);
-        });
+        await ConsoleApp.RunAsync(args, InspectCommand);
 
         // ConsoleAppFramework sets Environment.ExitCode for argument parsing errors
-        if (exitCode == 0 && Environment.ExitCode != previousExitCode)
+        if (Environment.ExitCode != previousExitCode)
         {
             exitCode = Environment.ExitCode;
             Environment.ExitCode = previousExitCode; // Reset for testing
         }
 
         return exitCode;
+
+        /// <summary>
+        /// Inspects a NuGet package and displays its .nuspec metadata.
+        /// </summary>
+        /// <param name="package">The package ID to inspect (e.g., Newtonsoft.Json).</param>
+        /// <param name="version">The exact package version to inspect.</param>
+        /// <param name="config">Path to a nuget.config file to use for package sources.</param>
+        /// <param name="format">Output format: Table or Json.</param>
+        /// <param name="includePrerelease">Include prerelease versions when resolving packages.</param>
+        async Task InspectCommand(
+            [Argument] string package,
+            string version,
+            string? config = null,
+            OutputFormat format = OutputFormat.Table,
+            bool includePrerelease = false)
+        {
+            exitCode = await handler.ExecuteAsync(package, version, config, format, includePrerelease);
+        }
     }
 }

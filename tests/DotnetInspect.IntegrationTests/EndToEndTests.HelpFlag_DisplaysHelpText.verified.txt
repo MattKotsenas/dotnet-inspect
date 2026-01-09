@@ -1,0 +1,15 @@
+﻿{
+  output:
+Usage: [arguments...] [options...] [-h|--help] [--version]
+
+Inspects a NuGet package and displays its .nuspec metadata.
+
+Arguments:
+  [0] <string>    The package ID to inspect (e.g., Newtonsoft.Json).
+
+Options:
+  --version <string>         The exact package version to inspect. (Required)
+  --config <string?>         Path to a nuget.config file to use for package sources. (Default: null)
+  --format <OutputFormat>    Output format: Table or Json. (Default: Table)
+  --include-prerelease       Include prerelease versions when resolving packages. (Optional)
+}

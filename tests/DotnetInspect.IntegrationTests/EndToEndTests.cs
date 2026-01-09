@@ -161,6 +161,14 @@ public class EndToEndTests : VerifyBase
         await Verify(new { exitCode, output });
     }
 
+    [TestMethod]
+    public async Task HelpFlag_DisplaysHelpText()
+    {
+        (int exitCode, string output) = await RunCliAsync("--help");
+
+        await Verify(new { exitCode, output });
+    }
+
     private static async Task<(int ExitCode, string Output)> RunCliAsync(params string[] args)
     {
         TestConsole console = new();
